@@ -18,12 +18,12 @@ public class CellUI : MonoBehaviour
     }
     private void OnCellClicked()
     {
-        GameManager.Instance.MakeMove(_row, _col);
+        GameManager.Instance.MakeMove(_row, _col); 
     }
 
-    private void UpdateCell(Player player)
+    public void UpdateCell(Player player)
     {
-        _text.text = player.ToString();
+        _text.text = (player == Player.None) ? "" : player.ToString();
         _button.interactable = false;
     }
 

@@ -11,10 +11,14 @@ public class GameManager : MonoBehaviour
     public event Action<int, int, Player> OnMoveMade;
     public event Action OnGameStarted;
 
+    public Board CurrentBoard => _board;
+    public bool IsHumanTurn { get; private set; } 
+
     private Board _board;
     private Player _currentPlayer;
     private bool _isGameOver;
     private int _movesMade;
+
 
     private void Awake()
     {
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
         _isGameOver = false;
         _movesMade = 0;
         _currentPlayer = Player.X;
+        IsHumanTurn = true; // O jogador X (humano) sempre começa
 
         OnGameStarted?.Invoke();
         OnPlayerTurnChanged?.Invoke(_currentPlayer);
@@ -57,11 +62,13 @@ public class GameManager : MonoBehaviour
         if (CheckForWin(row, col))
         {
             _isGameOver = true;
+            IsHumanTurn = false; // O jogo acabou, ninguém joga
             OnGameWon?.Invoke(_currentPlayer);
         }
         else if (CheckForDraw())
         {
             _isGameOver = true;
+            IsHumanTurn = false; // O jogo acabou, ninguém joga
             OnGameDraw?.Invoke();
         }
         else
@@ -72,6 +79,10 @@ public class GameManager : MonoBehaviour
     private void SwitchPlayer()
     {
         _currentPlayer = _currentPlayer == Player.X ? Player.O : Player.X;
+
+        //Se o novo jogador for O, é a vez da IA (não é mais turno humano)
+        IsHumanTurn = _currentPlayer == Player.X;
+
         OnPlayerTurnChanged?.Invoke(_currentPlayer);
     }
 

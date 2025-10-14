@@ -18,7 +18,11 @@ public class CellUI : MonoBehaviour
     }
     private void OnCellClicked()
     {
-        GameManager.Instance.MakeMove(_row, _col); 
+        // SÓ PERMITE O CLIQUE SE FOR O TURNO DO HUMANO E O JOGO NÃO TIVER ACABADO
+        if (GameManager.Instance.IsHumanTurn)
+        {
+            GameManager.Instance.MakeMove(_row, _col);
+        } 
     }
 
     public void UpdateCell(Player player)

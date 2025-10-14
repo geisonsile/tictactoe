@@ -67,15 +67,47 @@ public class AIPlayer : MonoBehaviour
                 }
             }
         }
-        
-        // Se houver jogadas disponíveis, escolhe uma aleatoriamente.
+
+        // Para cada jogada possível, a IA simula se ela venceria.
+        foreach (var move in availableMoves)
+        {
+            // Simula a jogada da IA
+            board.SetCell(move.x, move.y, AI_PLAYER);
+
+            // Verifica se essa jogada resulta em vitória
+            if (board.CheckWinCondition(AI_PLAYER))
+            {
+                board.ClearCell(move.x, move.y); // Limpa a simulação
+                return move; // Retorna a jogada vencedora!
+            }
+
+            board.ClearCell(move.x, move.y); // Desfaz a simulação para o próximo teste
+        }
+
+        // Se não encontrou uma jogada para vencer, a IA verifica se o jogador pode vencer.
+        Player humanPlayer = Player.X;
+        foreach (var move in availableMoves)
+        {
+            // Simula a jogada do HUMANO
+            board.SetCell(move.x, move.y, humanPlayer);
+
+            // Verifica se o humano venceria com essa jogada
+            if (board.CheckWinCondition(humanPlayer))
+            {
+                board.ClearCell(move.x, move.y); // Limpa a simulação
+                return move; // Retorna a jogada de bloqueio!
+            }
+
+            board.ClearCell(move.x, move.y); // Desfaz a simulação
+        }
+
+        // Se não há jogadas de vitória ou bloqueio, joga aleatoriamente
         if (availableMoves.Count > 0)
         {
             int randomIndex = Random.Range(0, availableMoves.Count);
             return availableMoves[randomIndex];
         }
 
-        // Se não houver jogadas, retorna um valor inválido.
         return new Vector2Int(-1, -1);
     }
 }

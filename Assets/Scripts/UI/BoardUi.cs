@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BoardUi : MonoBehaviour
@@ -30,11 +29,11 @@ public class BoardUi : MonoBehaviour
     }
 
     /// <summary>
-    /// Este método é o "Handler" do evento. Ele é executado quando o evento OnMoveMade acontece.
+    /// Este método é executado quando o evento OnMoveMade acontece.
     /// </summary>
     private void UpdateBoard(int row, int col, Player player)
     {
-        // Converte a coordenada (linha, coluna) para o índice do nosso array 1D.
+        // Converte a coordenada (linha, coluna) para o índice do array.
         int index = row * 3 + col;
 
         // Validação para garantir que o índice está dentro dos limites do array.
@@ -44,7 +43,6 @@ public class BoardUi : MonoBehaviour
         }
     }
 
-    // Adicione um método para resetar o tabuleiro visualmente
     private void ResetBoard()
     {
         foreach (var cell in _cells)

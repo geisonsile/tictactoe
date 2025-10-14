@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Gerencia a lógica do jogo Tic Tac Toe.
+/// Uso do padrão Strategy para verificação de vitória e empate.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -12,13 +16,29 @@ public class GameManager : MonoBehaviour
     public event Action OnGameStarted;
 
     public Board CurrentBoard => _board;
-    public bool IsHumanTurn { get; private set; } 
+    public bool IsHumanTurn { get; private set; }
 
     private Board _board;
     private Player _currentPlayer;
     private bool _isGameOver;
     private int _movesMade;
 
+    // Estratégias para verificação de condições
+    private readonly IWinCondition[] _winConditions;
+    private readonly IDrawCondition _drawCondition;
+
+    public GameManager()
+    {
+        _winConditions = new IWinCondition[]
+        {
+            new RowWinCondition(),
+            new ColumnWinCondition(),
+            new MainDiagonalWinCondition(),
+            new AntiDiagonalWinCondition()
+        };
+
+        _drawCondition = new FullBoardDrawCondition();
+    }
 
     private void Awake()
     {
@@ -61,15 +81,11 @@ public class GameManager : MonoBehaviour
 
         if (CheckForWin(row, col))
         {
-            _isGameOver = true;
-            IsHumanTurn = false; // O jogo acabou, ninguém joga
-            OnGameWon?.Invoke(_currentPlayer);
+            EndGame(true);
         }
         else if (CheckForDraw())
         {
-            _isGameOver = true;
-            IsHumanTurn = false; // O jogo acabou, ninguém joga
-            OnGameDraw?.Invoke();
+           EndGame(false);
         }
         else
         {
@@ -80,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         _currentPlayer = _currentPlayer == Player.X ? Player.O : Player.X;
 
-        //Se o novo jogador for O, é a vez da IA (não é mais turno humano)
+        //Se o jogador for O, é a vez da IA
         IsHumanTurn = _currentPlayer == Player.X;
 
         OnPlayerTurnChanged?.Invoke(_currentPlayer);
@@ -88,49 +104,14 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Verifica se o jogador atual venceu o jogo após sua última jogada.
-    /// É mais eficiente checar apenas as linhas, colunas e diagonais relevantes à última jogada.
+    /// Utiliza o padrão Strategy para verificar todas as condições de vitória.
     /// </summary>
-    /// <param name="lastMoveRow">A linha da última jogada.</param>
-    /// <param name="lastMoveCol">A coluna da última jogada.</param>
-    /// <returns>True se o jogador atual venceu, false caso contrário.</returns>
     private bool CheckForWin(int lastMoveRow, int lastMoveCol)
     {
-        // Checar a linha
-        if (_board.GetCell(lastMoveRow, 0) == _currentPlayer &&
-            _board.GetCell(lastMoveRow, 1) == _currentPlayer &&
-            _board.GetCell(lastMoveRow, 2) == _currentPlayer)
+        foreach (var winCondition in _winConditions)
         {
-            return true;
-        }
-
-        // Checar a coluna
-        if (_board.GetCell(0, lastMoveCol) == _currentPlayer &&
-            _board.GetCell(1, lastMoveCol) == _currentPlayer &&
-            _board.GetCell(2, lastMoveCol) == _currentPlayer)
-        {
-            return true;
-        }
-
-        // Checar a diagonal principal (se a jogada foi nela)
-        if (lastMoveRow == lastMoveCol)
-        {
-            if (_board.GetCell(0, 0) == _currentPlayer &&
-                _board.GetCell(1, 1) == _currentPlayer &&
-                _board.GetCell(2, 2) == _currentPlayer)
-            {
+            if (winCondition.IsSatisfied(_board, lastMoveRow, lastMoveCol, _currentPlayer))
                 return true;
-            }
-        }
-
-        // Checar a diagonal secundária (se a jogada foi nela)
-        if (lastMoveRow + lastMoveCol == 2)
-        {
-            if (_board.GetCell(0, 2) == _currentPlayer &&
-                _board.GetCell(1, 1) == _currentPlayer &&
-                _board.GetCell(2, 0) == _currentPlayer)
-            {
-                return true;
-            }
         }
 
         return false;
@@ -138,12 +119,29 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Verifica se o jogo empatou.
+    /// Utiliza o padrão Strategy para verificar a condição de empate.
     /// </summary>
-    /// <returns>True se o jogo empatou, false caso contrário.</returns>
     private bool CheckForDraw()
     {
-        // Um empate só pode ocorrer se todas as 9 casas foram preenchidas.
-        // Como já checamos a vitória antes, se chegamos em 9 jogadas, é empate.
-        return _movesMade == 9;
+        return _drawCondition.IsSatisfied(_movesMade);
+    }
+
+    /// <summary>
+    /// Encerra o jogo, definindo o estado apropriado e disparando eventos.
+    /// </summary>
+    /// <param name="isWin">True se o jogo terminou com vitória, false se terminou em empate.</param>
+    private void EndGame(bool isWin)
+    {
+        _isGameOver = true;
+        IsHumanTurn = false;
+
+        if (isWin)
+        {
+            OnGameWon?.Invoke(_currentPlayer);
+        }
+        else
+        {
+            OnGameDraw?.Invoke();
+        }
     }
 }

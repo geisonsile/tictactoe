@@ -77,8 +77,8 @@ public class AIPlayer : MonoBehaviour
             // Verifica se essa jogada resulta em vitória
             if (board.CheckWinCondition(AI_PLAYER))
             {
-                board.ClearCell(move.x, move.y); // Limpa a simulação
-                return move; // Retorna a jogada vencedora!
+                board.ClearCell(move.x, move.y); 
+                return move;
             }
 
             board.ClearCell(move.x, move.y); // Desfaz a simulação para o próximo teste
@@ -94,11 +94,24 @@ public class AIPlayer : MonoBehaviour
             // Verifica se o humano venceria com essa jogada
             if (board.CheckWinCondition(humanPlayer))
             {
-                board.ClearCell(move.x, move.y); // Limpa a simulação
-                return move; // Retorna a jogada de bloqueio!
+                board.ClearCell(move.x, move.y);
+                return move;
             }
 
             board.ClearCell(move.x, move.y); // Desfaz a simulação
+        }
+
+        // PEGAR UM CANTO VAZIO
+        List<Vector2Int> cornerMoves = new List<Vector2Int>();
+        if (board.IsCellEmpty(0, 0)) cornerMoves.Add(new Vector2Int(0, 0));
+        if (board.IsCellEmpty(0, 2)) cornerMoves.Add(new Vector2Int(0, 2));
+        if (board.IsCellEmpty(2, 0)) cornerMoves.Add(new Vector2Int(2, 0));
+        if (board.IsCellEmpty(2, 2)) cornerMoves.Add(new Vector2Int(2, 2));
+
+        if (cornerMoves.Count > 0)
+        {
+            int randomIndex = Random.Range(0, cornerMoves.Count);
+            return cornerMoves[randomIndex];
         }
 
         // Se não há jogadas de vitória ou bloqueio, joga aleatoriamente

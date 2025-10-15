@@ -69,7 +69,7 @@ public class AIPlayer : MonoBehaviour
         }
 
         // Para cada jogada possível, a IA simula se ela venceria.
-        /*foreach (var move in availableMoves)
+        foreach (var move in availableMoves)
         {
             // Simula a jogada da IA
             board.SetCell(move.x, move.y, AI_PLAYER);
@@ -112,7 +112,7 @@ public class AIPlayer : MonoBehaviour
         {
             int randomIndex = Random.Range(0, cornerMoves.Count);
             return cornerMoves[randomIndex];
-        }*/
+        }
 
         // Se não há jogadas de vitória ou bloqueio, joga aleatoriamente
         if (availableMoves.Count > 0)

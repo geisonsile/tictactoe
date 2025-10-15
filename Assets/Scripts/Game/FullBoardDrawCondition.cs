@@ -7,6 +7,6 @@ public class FullBoardDrawCondition : IDrawCondition
 
     public bool IsSatisfied(int movesMade)
     {
-        return movesMade == TotalCells;
+        return movesMade >= TotalCells;
     }
 }

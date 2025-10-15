@@ -69,7 +69,7 @@ public class AIPlayer : MonoBehaviour
         }
 
         // Para cada jogada possível, a IA simula se ela venceria.
-        foreach (var move in availableMoves)
+        /*foreach (var move in availableMoves)
         {
             // Simula a jogada da IA
             board.SetCell(move.x, move.y, AI_PLAYER);
@@ -101,7 +101,7 @@ public class AIPlayer : MonoBehaviour
             board.ClearCell(move.x, move.y); // Desfaz a simulação
         }
 
-        // PEGAR UM CANTO VAZIO
+        // Procura um canto vazio para IA jogar
         List<Vector2Int> cornerMoves = new List<Vector2Int>();
         if (board.IsCellEmpty(0, 0)) cornerMoves.Add(new Vector2Int(0, 0));
         if (board.IsCellEmpty(0, 2)) cornerMoves.Add(new Vector2Int(0, 2));
@@ -112,7 +112,7 @@ public class AIPlayer : MonoBehaviour
         {
             int randomIndex = Random.Range(0, cornerMoves.Count);
             return cornerMoves[randomIndex];
-        }
+        }*/
 
         // Se não há jogadas de vitória ou bloqueio, joga aleatoriamente
         if (availableMoves.Count > 0)

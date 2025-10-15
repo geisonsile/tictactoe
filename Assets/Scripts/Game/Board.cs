@@ -24,7 +24,7 @@ public class Board
         }
     }
 
-     // Faz uma jogada de simulação para ver se o 'player' especificado venceu.
+     // Faz uma jogada de simulação para ver se o player especificado venceu.
     public bool CheckWinCondition(Player player)
     {
         // Checar linhas e colunas

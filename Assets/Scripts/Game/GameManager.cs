@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Player _currentPlayer;
     private bool _isGameOver;
     private int _movesMade;
+    private IWinCondition _lastWinCondition;
 
     // Estratégias para verificação de condições
     private readonly IWinCondition[] _winConditions;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         _movesMade = 0;
         _currentPlayer = Player.X;
         IsHumanTurn = true; // O jogador X (humano) sempre começa
+        _lastWinCondition = null;
 
         OnGameStarted?.Invoke();
         OnPlayerTurnChanged?.Invoke(_currentPlayer);
@@ -111,7 +113,10 @@ public class GameManager : MonoBehaviour
         foreach (var winCondition in _winConditions)
         {
             if (winCondition.IsSatisfied(_board, lastMoveRow, lastMoveCol, _currentPlayer))
+            {
+                _lastWinCondition = winCondition;
                 return true;
+            }
         }
 
         return false;
@@ -124,6 +129,14 @@ public class GameManager : MonoBehaviour
     private bool CheckForDraw()
     {
         return _drawCondition.IsSatisfied(_movesMade);
+    }
+
+     /// <summary>
+    /// Retorna a linha vencedora para ser renderizada.
+    /// </summary>
+    public WinLine GetWinLine()
+    {
+        return _lastWinCondition?.GetWinLine() ?? default;
     }
 
     /// <summary>

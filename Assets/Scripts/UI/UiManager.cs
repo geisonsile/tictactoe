@@ -37,7 +37,7 @@ public class UiManager : MonoBehaviour
     }
     private void HandleGameWon(Player player)
     {
-        _resultText.text = $"Jogador {player} Venceu!";
+        _resultText.text = $"Jogador <color=green><b>{player}</b></color> venceu!";
         _gameOverPanel.SetActive(true);
     }
 

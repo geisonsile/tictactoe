@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /// <summary>
 /// Interface para definir condições de vitória no jogo.
 /// Seguindo o princípio Open/Closed: aberto para extensão, fechado para modificação.
@@ -13,4 +15,9 @@ public interface IWinCondition
     /// <param name="player">O jogador a verificar.</param>
     /// <returns>True se a condição de vitória foi atendida.</returns>
     bool IsSatisfied(Board board, int lastMoveRow, int lastMoveCol, Player player);
+
+    /// <summary>
+    /// Retorna os pontos de início e fim da linha vencedora, ou null se não aplicável.
+    /// </summary>
+    WinLine GetWinLine();
 }

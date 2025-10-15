@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BoardUi : MonoBehaviour
+public class BoardUI : MonoBehaviour
 {
     [SerializeField] private CellUI[] _cells;
 
@@ -56,4 +56,16 @@ public class BoardUi : MonoBehaviour
         ResetBoard();
     }  
     
+    /// <summary>
+    /// Retorna o RectTransform de uma célula específica com base em sua linha e coluna.
+    /// </summary>
+    public RectTransform GetCellTransform(int row, int col)
+    {
+        int index = row * 3 + col;
+        if (index >= 0 && index < _cells.Length)
+        {
+            return _cells[index].GetComponent<RectTransform>();
+        }
+        return null;
+    }
 }

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             new RowWinCondition(),
             new ColumnWinCondition(),
             new MainDiagonalWinCondition(),
-            new AntiDiagonalWinCondition()
+            new ReverseDiagonalWinCondition()
         };
 
         _drawCondition = new FullBoardDrawCondition();

@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Verifica vitória na diagonal secundária (0,2 até 2,0).
 /// </summary>
-public class AntiDiagonalWinCondition : IWinCondition
+public class ReverseDiagonalWinCondition : IWinCondition
 {
     public bool IsSatisfied(Board board, int lastMoveRow, int lastMoveCol, Player player)
     {

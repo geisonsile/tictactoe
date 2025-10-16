@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LineController : MonoBehaviour
+public class WinLineController : MonoBehaviour
 {
-    [SerializeField] private Image _winningLineImage;
+    [SerializeField] private Image _winLineImage;
     [SerializeField] private BoardUI _boardUI;
 
     void Start()
@@ -26,7 +26,7 @@ public class LineController : MonoBehaviour
 
     private void HandleGameStarted()
     {
-        _winningLineImage.gameObject.SetActive(false);
+        _winLineImage.gameObject.SetActive(false);
     }
 
     private void HandleGameWon(Player winner)
@@ -43,8 +43,8 @@ public class LineController : MonoBehaviour
         Vector2 startPos = startCell.localPosition;
         Vector2 endPos = endCell.localPosition;
 
-        RectTransform lineRect = _winningLineImage.rectTransform;
-        _winningLineImage.gameObject.SetActive(true);
+        RectTransform lineRect = _winLineImage.rectTransform;
+        _winLineImage.gameObject.SetActive(true);
 
         lineRect.localPosition = (startPos + endPos) / 2f;
         float distance = Vector2.Distance(startPos, endPos);

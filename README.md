@@ -1,6 +1,6 @@
 # Jogo da Velha com Arquitetura Avançada em Unity
 
-![Gameplay do Jogo](Sprites/jogo.gif)
+![Gameplay do Jogo](Assets/Sprites/jogo.gif)
 
 ## 🎯 Sobre o Projeto
 

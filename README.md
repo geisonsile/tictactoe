@@ -55,7 +55,9 @@ Assets/
     ├── Scenes
     └── Scripts/
         ├── Core/         (GameManager, Player)
-        ├── Game/         (AIPlayer, Board, AntiDiagonalWinCondition, ColumnWinCondition, FullBoardDrawCondition RowWinCondition, WinLine)
+        ├── Game/         (AIPlayer, Board, ColumnWinCondition, 
+                           FullBoardDrawCondition, MainDiagonalWinCondition,
+                           ReverseDiagonalWinCondition, RowWinCondition, WinLine)
         ├── Interface/    (IDrawCondition, IWinCondition)
         └── UI/           (BoardUI, CellUI, UIManager, WinLineController)
     └── Sprites   

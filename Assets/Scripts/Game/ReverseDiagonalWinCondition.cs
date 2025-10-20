@@ -7,7 +7,6 @@ public class ReverseDiagonalWinCondition : IWinCondition
 {
     public bool IsSatisfied(Board board, int lastMoveRow, int lastMoveCol, Player player)
     {
-        // Verifica se o movimento foi na diagonal secundária
         if (lastMoveRow + lastMoveCol != 2) return false;
 
         return board.GetCell(0, 2) == player &&

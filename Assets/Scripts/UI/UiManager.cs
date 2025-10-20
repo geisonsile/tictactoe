@@ -32,7 +32,6 @@ public class UiManager : MonoBehaviour
     }
     private void HandleGameStarted()
     {
-        // Esconde o painel quando um novo jogo começa
         _gameOverPanel.SetActive(false);
     }
     private void HandleGameWon(Player player)

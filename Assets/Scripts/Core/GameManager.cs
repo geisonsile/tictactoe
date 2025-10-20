@@ -1,10 +1,6 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Gerencia a lógica do jogo Tic Tac Toe.
-/// Uso do padrão Strategy para verificação de vitória e empate.
-/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -65,7 +61,7 @@ public class GameManager : MonoBehaviour
         _isGameOver = false;
         _movesMade = 0;
         _currentPlayer = Player.X;
-        IsHumanTurn = true; // O jogador X (humano) sempre começa
+        IsHumanTurn = true;
         _lastWinCondition = null;
 
         OnGameStarted?.Invoke();
@@ -87,20 +83,22 @@ public class GameManager : MonoBehaviour
         }
         else if (CheckForDraw())
         {
-           EndGame(false);
+            EndGame(false);
         }
         else
         {
             SwitchPlayer();
         }
     }
+    
+    /// <summary>
+    /// Alterna o jogador atual entre X e O.
+    /// // O jogador for X, é o humano    
+    /// </summary>
     private void SwitchPlayer()
     {
         _currentPlayer = _currentPlayer == Player.X ? Player.O : Player.X;
-
-        //Se o jogador for O, é a vez da IA
         IsHumanTurn = _currentPlayer == Player.X;
-
         OnPlayerTurnChanged?.Invoke(_currentPlayer);
     }
 
@@ -131,7 +129,7 @@ public class GameManager : MonoBehaviour
         return _drawCondition.IsSatisfied(_movesMade);
     }
 
-     /// <summary>
+    /// <summary>
     /// Retorna a linha vencedora para ser renderizada.
     /// </summary>
     public WinLine GetWinLine()

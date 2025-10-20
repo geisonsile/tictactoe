@@ -33,10 +33,10 @@ public class BoardUI : MonoBehaviour
     /// </summary>
     private void UpdateBoard(int row, int col, Player player)
     {
-        // Converte a coordenada (linha, coluna) para o índice do array.
+        //Converte a coordenada (linha, coluna) para o índice do array.
         int index = row * 3 + col;
 
-        // Validação para garantir que o índice está dentro dos limites do array.
+        //Validação para garantir que o índice está dentro dos limites do array.
         if (index >= 0 && index < _cells.Length)
         {
             _cells[index].UpdateCell(player);

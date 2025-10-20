@@ -23,11 +23,12 @@ public class Board
             }
         }
     }
-
-     // Faz uma jogada de simulação para ver se o player especificado venceu.
+    /// <summary>
+    /// Faz uma jogada de simulação para ver se o player especificado venceu.
+    /// </summary>
     public bool CheckWinCondition(Player player)
     {
-        // Checar linhas e colunas
+        //Verifica linhas e colunas
         for (int i = 0; i < 3; i++)
         {
             if ((_grid[i, 0] == player && _grid[i, 1] == player && _grid[i, 2] == player) ||
@@ -37,7 +38,7 @@ public class Board
             }
         }
 
-        // Checar diagonais
+        //Verifica diagonais
         if ((_grid[0, 0] == player && _grid[1, 1] == player && _grid[2, 2] == player) ||
             (_grid[0, 2] == player && _grid[1, 1] == player && _grid[2, 0] == player))
         {
@@ -46,8 +47,7 @@ public class Board
 
         return false;
     }
-
-    // Desfaz uma jogada de simulação.
+    
     public void ClearCell(int row, int col)
     {
         _grid[row, col] = Player.None;

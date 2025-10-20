@@ -7,7 +7,6 @@ public class MainDiagonalWinCondition : IWinCondition
 {
     public bool IsSatisfied(Board board, int lastMoveRow, int lastMoveCol, Player player)
     {
-        // Verifica se o movimento foi na diagonal principal
         if (lastMoveRow != lastMoveCol) return false;
 
         return board.GetCell(0, 0) == player &&

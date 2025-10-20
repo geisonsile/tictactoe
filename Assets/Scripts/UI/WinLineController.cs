@@ -33,13 +33,13 @@ public class WinLineController : MonoBehaviour
     {
         WinLine winLine = GameManager.Instance.GetWinLine();
 
-        // Pega os RectTransforms reais das células de início e fim
+        //Pega os RectTransforms reais das células de início e fim
         RectTransform startCell = _boardUI.GetCellTransform(winLine.StartCellIndex.x, winLine.StartCellIndex.y);
         RectTransform endCell = _boardUI.GetCellTransform(winLine.EndCellIndex.x, winLine.EndCellIndex.y);
 
         if (startCell == null || endCell == null) return;
 
-        // Pega as posições locais (anchoredPosition) das células dentro do BoardPanel
+        //Pega as posições locais (anchoredPosition) das células dentro do BoardPanel
         Vector2 startPos = startCell.localPosition;
         Vector2 endPos = endCell.localPosition;
 

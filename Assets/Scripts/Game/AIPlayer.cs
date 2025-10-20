@@ -7,7 +7,7 @@ public class AIPlayer : MonoBehaviour
     [Tooltip("O tempo que a IA 'pensa' antes de jogar.")]
     [SerializeField] private float _thinkingTime = 1f;
     
-    // Vamos designar o Jogador 'O' como sendo a IA.
+    //O Jogador O será a IA.
     private const Player AI_PLAYER = Player.O;
 
     void Start()
@@ -29,7 +29,6 @@ public class AIPlayer : MonoBehaviour
 
     private void HandlePlayerTurnChanged(Player currentPlayer)
     {
-        // Se o turno for do jogador da IA, ela começa a "pensar".
         if (currentPlayer == AI_PLAYER)
         {
             StartCoroutine(MakeMoveAfterDelay());
@@ -38,14 +37,12 @@ public class AIPlayer : MonoBehaviour
 
     private IEnumerator MakeMoveAfterDelay()
     {
-        // Espera um pouco para a jogada não ser instantânea.
         yield return new WaitForSeconds(_thinkingTime);
 
-        // Encontra a melhor jogada (no nosso caso, uma aleatória válida)
         Vector2Int move = FindBestMove();
 
-        // Executa a jogada
-        if(move.x != -1) // Garante que uma jogada válida foi encontrada
+        //Garante que uma jogada válida foi encontrada antes de fazer a jogada.
+        if(move.x != -1) 
         {
             GameManager.Instance.MakeMove(move.x, move.y);
         }
@@ -71,34 +68,31 @@ public class AIPlayer : MonoBehaviour
         // Para cada jogada possível, a IA simula se ela venceria.
         foreach (var move in availableMoves)
         {
-            // Simula a jogada da IA
+            
             board.SetCell(move.x, move.y, AI_PLAYER);
 
-            // Verifica se essa jogada resulta em vitória
             if (board.CheckWinCondition(AI_PLAYER))
             {
                 board.ClearCell(move.x, move.y); 
                 return move;
             }
 
-            board.ClearCell(move.x, move.y); // Desfaz a simulação para o próximo teste
+            board.ClearCell(move.x, move.y);
         }
 
         // Se não encontrou uma jogada para vencer, a IA verifica se o jogador pode vencer.
         Player humanPlayer = Player.X;
         foreach (var move in availableMoves)
         {
-            // Simula a jogada do HUMANO
             board.SetCell(move.x, move.y, humanPlayer);
 
-            // Verifica se o humano venceria com essa jogada
             if (board.CheckWinCondition(humanPlayer))
             {
                 board.ClearCell(move.x, move.y);
                 return move;
             }
 
-            board.ClearCell(move.x, move.y); // Desfaz a simulação
+            board.ClearCell(move.x, move.y);
         }
 
         // Procura um canto vazio para IA jogar

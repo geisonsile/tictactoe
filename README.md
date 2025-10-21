@@ -10,7 +10,7 @@ O objetivo principal não era criar uma mecânica de jogo complexa, mas sim cons
 
 ## ✨ Destaques da Arquitetura e Boas Práticas
 
-Este projeto foi construído sobre quatro pilares principais:
+Este projeto foi construído sobre cinco pilares principais:
 
 ### 1. **Princípios SOLID**
 
@@ -47,20 +47,47 @@ Foram aplicadas práticas de código limpo para garantir legibilidade e manuteni
 * **Funções Pequenas:** Cada método tem uma responsabilidade única e é curto.
 * **Estrutura de Projeto:** O projeto no Unity é organizado em pastas que separam claramente a lógica, a UI, os prefabs, as cenas e outros assets.
 
+### 5. **Testes Automatizados**
+O projeto implementa uma estratégia abrangente de testes para garantir qualidade e confiabilidade do código:
+
+**Testes Unitários**
+- Executam rapidamente sem precisar rodar o jogo
+- Testam a lógica de negócio de forma isolada
+- Cobrem as regras fundamentais do jogo:
+  - Verificação de condições de vitória (linhas, colunas, diagonais)
+  - Detecção de empate quando o tabuleiro está completo
+  - Validação de jogadas em posições já ocupadas
+  - Alternância correta de turnos entre jogadores
+
+**Testes de Integração**
+- Simulam partidas completas do início ao fim
+- Validam a interação entre diferentes componentes do sistema
+- Verificam o disparo correto de eventos (vitória, empate, troca de turno)
+- Garantem que o fluxo completo do jogo funciona conforme esperado
+
+**Benefícios da Abordagem de Testes**
+- **Confiança no Refactoring**: Modificações podem ser feitas com segurança
+- **Documentação Viva**: Os testes servem como exemplos de uso do código
+- **Detecção Precoce de Bugs**: Problemas são identificados antes de chegarem à produção
+- **Design Melhorado**: Código testável é naturalmente mais desacoplado e modular
+
 ## 📁 Estrutura do Projeto
 
 ```
 Assets/
     ├── Prefabs
     ├── Scenes
-    └── Scripts/
-        ├── Core/         (GameManager, Player)
-        ├── Game/         (AIPlayer, Board, ColumnWinCondition, 
-                           FullBoardDrawCondition, MainDiagonalWinCondition,
-                           ReverseDiagonalWinCondition, RowWinCondition, WinLine)
-        ├── Interface/    (IDrawCondition, IWinCondition)
-        └── UI/           (BoardUI, CellUI, UIManager, WinLineController)
-    └── Sprites   
+    ├── Scripts/
+    │   ├── Core/         (GameManager, Player)
+    │   ├── Game/         (AIPlayer, Board, ColumnWinCondition, 
+    │   │                  FullBoardDrawCondition, MainDiagonalWinCondition,
+    │   │                  ReverseDiagonalWinCondition, RowWinCondition, WinLine)
+    │   ├── Interface/    (IDrawCondition, IWinCondition)
+    │   └── UI/           (BoardUI, CellUI, UIManager, WinLineController)
+    ├── Sprites
+    └── Tests/
+        ├── EditMode/     (Testes Unitários)
+        └── PlayMode/     (Testes de Integração)
 ```
 
 ## 🚀 Como Executar

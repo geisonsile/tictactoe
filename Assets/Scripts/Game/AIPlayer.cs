@@ -39,7 +39,7 @@ public class AIPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(_thinkingTime);
 
-        Vector2Int move = FindBestMove();
+        Vector2Int move = FindBestMove(GameManager.Instance.CurrentBoard);
 
         //Garante que uma jogada válida foi encontrada antes de fazer a jogada.
         if(move.x != -1) 
@@ -48,10 +48,10 @@ public class AIPlayer : MonoBehaviour
         }
     }
 
-    private Vector2Int FindBestMove()
+    public Vector2Int FindBestMove(Board board)
     {
         List<Vector2Int> availableMoves = new List<Vector2Int>();
-        Board board = GameManager.Instance.CurrentBoard;
+        //Board board = GameManager.Instance.CurrentBoard;
 
         // Percorre o tabuleiro para encontrar todas as casas vazias.
         for (int i = 0; i < 3; i++)
